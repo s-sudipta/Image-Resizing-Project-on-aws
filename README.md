@@ -22,11 +22,11 @@ This Terraform project sets up a serverless image resizing pipeline that:
 
 Two S3 buckets are created:
 
-- **Source Bucket** (`image-need-to-resize`): Where users upload original images
+- **Source Bucket** (`pre-processed-image-bucket`): Where users upload original images
   
   ![S3 Non-Resized Bucket](assets/s3-non-resized.png)
 
-- **Destination Bucket** (`image-resized`): Where resized images are stored
+- **Destination Bucket** (`processed-image-bucket`): Where resized images are stored
   
   ![S3 Resized Bucket](assets/s3-resized.png)
 
