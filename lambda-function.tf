@@ -11,7 +11,7 @@ resource "aws_lambda_function" "resize-lambda-function" {
   environment {
     variables = {
       Topic_Arn = aws_sns_topic.Resized-Image-SNS.arn
-      S3_Bucket = aws_s3_bucket.image-resized.id
+      S3_Bucket = aws_s3_bucket.processed-image-bucket.id
     }
   }
 }
@@ -21,11 +21,11 @@ resource "aws_lambda_permission" "trigger-lambda" {
   action        = "lambda:InvokeFunction"
   function_name = aws_lambda_function.resize-lambda-function.id
   principal     = "s3.amazonaws.com"
-  source_arn    = "arn:aws:s3:::${aws_s3_bucket.image-need-to-resize.id}"
+  source_arn    = "arn:aws:s3:::${aws_s3_bucket.pre-processed-image-bucket.id}"
 }
 
 resource "aws_s3_bucket_notification" "bucket_notification" {
-  bucket = aws_s3_bucket.image-need-to-resize.id
+  bucket = aws_s3_bucket.pre-processed-image-bucket.id
 
   lambda_function {
     lambda_function_arn = aws_lambda_function.resize-lambda-function.arn
